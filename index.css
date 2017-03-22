@@ -50,6 +50,7 @@ input[type=checkbox] {
 input[type=checkbox]~label {
 	margin-left: 1.75rem;
 	margin-right: 3rem;
+	cursor: pointer;
 }
 
 input[type=checkbox]~label:before {
@@ -72,6 +73,15 @@ input[type=checkbox]:checked~label {
 	background: #fe3;
 }
 
+.select-row input[type=checkbox]~label {
+	margin: 0;
+	display: block;
+}
+
+.select-row input[type=checkbox]:checked~label {
+	background: none;
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -84,11 +94,16 @@ td {
 thead tr {
 	background: #231f20;
 	color: white;
+	-webkit-font-smoothing: antialiased;
 }
 
 thead a {
 	color: white;
 	padding: 0 0.25em
+}
+
+tbody tr.row-selected {
+	background: #ff9;
 }
 
 tbody td {
@@ -102,11 +117,11 @@ tbody td {
 }
 
 .alert {
-	background-image: linear-gradient(225deg, #00aeef 0%, #00aeef 5%, transparent 5%, transparent 100%);
+	background-image: linear-gradient(225deg, #0ae 0%, #0ae 5%, transparent 5%, transparent 100%);
 }
 
 .warning {
-	background-color: #d7f0ff;
+	background-color: rgba(0, 170, 238, 0.12);
 }
 
 .flat-list {
@@ -125,4 +140,25 @@ tbody td {
 .filters ul,
 .columns ul {
 	display: flex;
+}
+
+footer {
+	margin: 1rem 0 0;
+}
+
+.button {
+	background: #231f20;
+	color: white;
+	font-size: 1em;
+	padding: 0.25rem 1rem;
+	border: 2px solid #231f20;
+	border-radius: 0.125em;
+	-webkit-font-smoothing: antialiased;
+	margin-right: 0.75rem;
+}
+
+.button-secondary {
+	border: 2px solid #231f20;
+	background: transparent;
+	color: #231f20;
 }

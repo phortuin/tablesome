@@ -28,14 +28,21 @@
 			<ul class="flat-list">
 			</ul>
 		</div>
-		<table data-tablesome>
-			<thead id="header"></thead>
-			<tbody id="body"></tbody>
-		</table>
+		<form method="get" action="/bulkedit">
+			<table data-tablesome>
+				<thead id="header"></thead>
+				<tbody id="body"></tbody>
+			</table>
+			<footer>
+				<button class="button" type="submit" name="action" value="rescue">Rescue animal!</button>
+				<button class="button button-secondary" type="submit" name="action" value="dont-care">Don’t care</button>
+			</footer>
+		</form>
 	</main>
 
 	<script type="text/handlebars" id="table-header">
 		<tr>
+			<td><!-- empty on purpose for row selector checkbox --></td>
 			{{#each columns}}
 			<td data-column="{{@key}}">
 				{{title}}
@@ -50,6 +57,10 @@
 	<script type="text/handlebars" id="table-body">
 		{{#each rows}}
 		<tr>
+			<td class="select-row">
+				<input type="checkbox" data-select-row id="select-row-{{@key}}" name="{{@key}}">
+				<label for="select-row-{{@key}}">&nbsp;</label>
+			</td>
 			{{#each this}}
 			<td
 				class="{{#alert}}alert{{/alert}} {{#warning}}warning{{/warning}}"

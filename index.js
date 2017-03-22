@@ -27,6 +27,7 @@
 	function renderHeader() {
 		HEADER_ELEMENT.innerHTML = renderPartial('table-header', { columns: _data.columns });
 		updateHeaderButtons(state.sortBy);
+		attachHeaderHandlers();
 	}
 
 	function updateHeaderButtons() {
@@ -40,10 +41,20 @@
 	}
 
 	function renderBody() {
-		BODY_ELEMENT.innerHTML = renderPartial('table-body', { rows: _data.rows });
+		const rows = _data.rows.reduce((prev, next) => {
+			prev[next.id] = next;
+			delete next.id;
+			return prev;
+		}, {});
+		BODY_ELEMENT.innerHTML = renderPartial('table-body', { rows });
+		attachBodyHandlers();
 	}
 
 	function renderSelectColumns() {
+		const columns = _.clone(_oData.columns);
+		Object.keys(columns).forEach(column => {
+			columns[column].visible = state.visibleColumns.indexOf(column) > -1;
+		});
 		SELECT_COLUMNS_ELEMENT.innerHTML = renderPartial('select-columns', { columns: _oData.columns });
 	}
 
@@ -75,6 +86,18 @@
 		});
 	}
 
+	function attachBodyHandlers() {
+		[].forEach.call(document.querySelectorAll('[data-select-row]'), el => {
+			el.addEventListener('click', event => {
+				if (event.currentTarget.checked) {
+					event.currentTarget.parentNode.parentNode.classList.add('row-selected');
+				} else {
+					event.currentTarget.parentNode.parentNode.classList.remove('row-selected');
+				}
+			})
+		});
+	}
+
 	function attachHandlers() {
 		[].forEach.call(document.querySelectorAll('[data-filter]'), el => {
 			el.addEventListener('click', event => {
@@ -96,9 +119,8 @@
 					removeColumn(event.currentTarget.dataset.selectColumn);
 				}
 				sortAndFilter();
-				renderBody();
 				renderHeader();
-				attachHeaderHandlers();
+				renderBody();
 			});
 		});
 	}
@@ -115,7 +137,7 @@
 		// Hide invisible columns
 		_data.columns = _.pick(_data.columns, state.visibleColumns);
 		_data.rows = _data.rows.map(item => {
-			return _.pick(item, state.visibleColumns);
+			return _.pick(item, state.visibleColumns.concat(['id']));
 		});
 
 		// Sort; if sortBy property is an object (in case of alert message etc)
@@ -129,13 +151,12 @@
 		_oData = _.clone(data);
 		_filters = filters;
 		state.sortBy = defaults.sortBy;
-		state.visibleColumns = Object.keys(_oData.columns).filter(column => _oData.columns[column].visible);
+		state.visibleColumns = Object.keys(_oData.columns).filter(column => _oData.columns[column].visible !== false);
 		sortAndFilter(defaults.sortBy);
 		renderHeader(defaults.sortBy);
 		renderBody();
 		renderSelectColumns();
 		attachHandlers();
-		attachHeaderHandlers();
 	}
 
 	app.init = init;
@@ -146,18 +167,15 @@ window.app.init({
 	columns: {
 		name: {
 			title: 'Name',
-			sortable: true,
-			visible: true
+			sortable: true
 		},
 		species: {
 			title: 'Species',
-			sortable: true,
-			visible: true
+			sortable: true
 		},
 		age: {
 			title: 'Age',
-			sortable: true,
-			visible: true
+			sortable: true
 		},
 		color: {
 			title: 'Color',
@@ -167,12 +185,14 @@ window.app.init({
 	},
 	rows: [
 		{
+			id: 'milo',
 			name: 'Milo',
 			species: 'hond',
 			age: 4,
 			color: 'zwart'
 		},
 		{
+			id: 'frits',
 			name: {
 				value: 'Frits',
 				warning: true,
@@ -184,6 +204,7 @@ window.app.init({
 			color: 'vlekjes'
 		},
 		{
+			id: 'george',
 			name: 'George',
 			species: {
 				value: 'kip',
@@ -193,12 +214,14 @@ window.app.init({
 			color: 'zwart'
 		},
 		{
+			id: 'sjem',
 			name: 'Sjem',
 			species: 'hond',
 			age: 7,
 			color: 'vlekjes'
 		},
 		{
+			id: 'hera',
 			name: 'Hera',
 			species: 'hond',
 			age: {
