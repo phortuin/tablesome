@@ -48,6 +48,7 @@
 		}, {});
 		BODY_ELEMENT.innerHTML = renderPartial('table-body', { rows });
 		attachBodyHandlers();
+		document.querySelector('[data-select-all-rows]').checked = false;
 	}
 
 	function renderSelectColumns() {
@@ -95,6 +96,22 @@
 					event.currentTarget.parentNode.parentNode.classList.remove('row-selected');
 				}
 			})
+		});
+
+		[].forEach.call(document.querySelectorAll('[data-select-all-rows]'), el => {
+			el.addEventListener('click', event => {
+				if (event.currentTarget.checked) {
+					[].forEach.call(document.querySelectorAll('[data-select-row]'), el => {
+						el.checked = false;
+						el.click();
+					});
+				} else {
+					[].forEach.call(document.querySelectorAll('[data-select-row]'), el => {
+						el.checked = true;
+						el.click();
+					});
+				}
+			});
 		});
 	}
 

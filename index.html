@@ -42,7 +42,10 @@
 
 	<script type="text/handlebars" id="table-header">
 		<tr>
-			<td><!-- empty on purpose for row selector checkbox --></td>
+			<td class="select-row inverted">
+				<input type="checkbox" data-select-all-rows id="select-all-rows">
+				<label for="select-all-rows">&nbsp;</label>
+			</td>
 			{{#each columns}}
 			<td data-column="{{@key}}">
 				{{title}}

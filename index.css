@@ -64,6 +64,15 @@ input[type=checkbox]~label:before {
 	border: 0.125em solid #534f50;
 }
 
+.inverted input[type=checkbox]~label:before {
+	border-color: white;
+}
+
+.inverted input[type=checkbox]:checked~label:before {
+	background: linear-gradient(-45deg, transparent 0%, transparent 40%, white 40%, white 55%, transparent 55%, transparent 100%);
+	border-color: white;
+}
+
 input[type=checkbox]:checked~label:before {
 	background: linear-gradient(-45deg, transparent 0%, transparent 40%, #534f50 40%, #534f50 55%, transparent 55%, transparent 100%);
 	border-color: #534f50;
