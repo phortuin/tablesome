@@ -9,15 +9,24 @@
 <body>
 
 	<main role="main">
+		<h1><span>Tablesome.</span></h1>
 		<div class="filters">
-			<div>
-				<input type="checkbox" data-filter="species" id="filter-dogs">
-				<label for="filter-dogs">Dogs</label>
-			</div>
-			<div>
-				<input type="checkbox" data-filter="age_below_8" id="filter-age">
-				<label for="filter-age">Age < 8</label>
-			</div>
+			<h2>Filter on:</h2>
+			<ul class="flat-list">
+				<li>
+					<input type="checkbox" data-filter="species" id="filter-dogs">
+					<label for="filter-dogs">Dogs only</label>
+				</li>
+				<li>
+					<input type="checkbox" data-filter="age_below_8" id="filter-age">
+					<label for="filter-age">Age < 8</label>
+				</li>
+			</ul>
+		</div>
+		<div class="columns" id="select-columns-panel">
+			<h2>Show columns:</h2>
+			<ul class="flat-list">
+			</ul>
 		</div>
 		<table data-tablesome>
 			<thead id="header"></thead>
@@ -25,7 +34,7 @@
 		</table>
 	</main>
 
-	<script type="text/mustache" id="table-header">
+	<script type="text/handlebars" id="table-header">
 		<tr>
 			{{#each columns}}
 			<td data-column="{{@key}}">
@@ -38,13 +47,30 @@
 		</tr>
 	</script>
 
-	<script type="text/mustache" id="table-body">
+	<script type="text/handlebars" id="table-body">
 		{{#each rows}}
 		<tr>
 			{{#each this}}
-			<td data-column="{{@key}}">{{.}}</td>
+			<td
+				class="{{#alert}}alert{{/alert}} {{#warning}}warning{{/warning}}"
+				{{#message}}title="{{.}}"{{/message}}
+				data-column="{{@key}}">
+				{{#if value}}
+				{{value}}
+				{{else}}
+				{{.}}
+				{{/if}}</td>
 			{{/each}}
 		</tr>
+		{{/each}}
+	</script>
+
+	<script type="text/handlebars" id="select-columns">
+		{{#each columns}}
+		<li>
+			<input type="checkbox" data-select-column="{{@key}}" id="select-column-{{@key}}" {{#visible}}checked{{/visible}}>
+			<label for="select-column-{{@key}}">{{title}}</label>
+		</li>
 		{{/each}}
 	</script>
 

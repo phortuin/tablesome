@@ -18,6 +18,30 @@ input {
 	font-size: 125%;
 }
 
+main {
+	width: 30em;
+	margin: 0 auto;
+	padding-top: 2rem;
+}
+
+h1, h2, h3 {
+	font-weight: 500;
+	margin: 0;
+}
+
+h1 {
+	font-size: 2em;
+	margin: 0 0 2rem;
+}
+
+h1 span {
+	background: #fe3;
+}
+
+h2 {
+	font-size: 1.25em;
+}
+
 input[type=checkbox] {
 	position: absolute;
 	opacity: 0;
@@ -44,14 +68,8 @@ input[type=checkbox]:checked~label:before {
 	border-color: #534f50;
 }
 
-.filters {
-	display: flex;
-	margin-bottom: 1rem;
-}
-
-main {
-	width: 30em;
-	margin: 0 auto;
+input[type=checkbox]:checked~label {
+	background: #fe3;
 }
 
 table {
@@ -73,8 +91,38 @@ thead a {
 	padding: 0 0.25em
 }
 
+tbody td {
+	border-bottom: 2px solid #ddd;
+}
+
 .active {
 	background: #fe3;
 	color: #231f20;
 	text-decoration: none;
+}
+
+.alert {
+	background-image: linear-gradient(225deg, #00aeef 0%, #00aeef 5%, transparent 5%, transparent 100%);
+}
+
+.warning {
+	background-color: #d7f0ff;
+}
+
+.flat-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.filters,
+.columns {
+	background: #eee;
+	padding: .75rem 1rem;
+	margin-bottom: 1rem;
+}
+
+.filters ul,
+.columns ul {
+	display: flex;
 }
