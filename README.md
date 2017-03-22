@@ -4,6 +4,8 @@ Prototype for dynamic table component. Create a HTML table based on JSON-structu
 
 - Show & hide columns
 - Programmable filters
-- Sort columns alphanumerically (uses Lodash `_.sortBy`)
+- Sort columns alphanumerically 
+
+Uses [Handlebars](http://handlebarsjs.com/) templates.
 
 Demo here: [http://output.jsbin.com/tobibi/](http://output.jsbin.com/tobibi/)
