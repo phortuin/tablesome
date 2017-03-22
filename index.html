@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Tablesome</title>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<script src="/index.js" defer></script>
+</head>
+<body>
+
+	<main role="main">
+		<div class="filters">
+			<div>
+				<input type="checkbox" data-filter="species" id="filter-dogs">
+				<label for="filter-dogs">Dogs</label>
+			</div>
+			<div>
+				<input type="checkbox" data-filter="age_below_8" id="filter-age">
+				<label for="filter-age">Age < 8</label>
+			</div>
+		</div>
+		<table data-tablesome>
+			<thead id="header"></thead>
+			<tbody id="body"></tbody>
+		</table>
+	</main>
+
+	<script type="text/mustache" id="table-header">
+		<tr>
+			{{#each columns}}
+			<td data-column="{{@key}}">
+				{{title}}
+				{{#sortable}}
+					<a data-sort="{{@key}}" href="#sort">a-z</a>
+				{{/sortable}}
+			</td>
+			{{/each}}
+		</tr>
+	</script>
+
+	<script type="text/mustache" id="table-body">
+		{{#each rows}}
+		<tr>
+			{{#each this}}
+			<td data-column="{{@key}}">{{.}}</td>
+			{{/each}}
+		</tr>
+		{{/each}}
+	</script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+</body>
+</html>
+
