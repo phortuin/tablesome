@@ -125,11 +125,11 @@ tbody td {
 	text-decoration: none;
 }
 
-.alert {
+.show-alerts .alert {
 	background-image: linear-gradient(225deg, #0ae 0%, #0ae 5%, transparent 5%, transparent 100%);
 }
 
-.warning {
+.show-alerts .warning {
 	background-color: rgba(0, 170, 238, 0.12);
 }
 
@@ -140,14 +140,16 @@ tbody td {
 }
 
 .filters,
-.columns {
+.columns,
+.preferences {
 	background: #eee;
 	padding: .75rem 1rem;
 	margin-bottom: 1rem;
 }
 
 .filters ul,
-.columns ul {
+.columns ul,
+.preferences ul {
 	display: flex;
 }
 

@@ -142,6 +142,18 @@
 		});
 	}
 
+	function attachPreferenceHandlers() {
+		[].forEach.call(document.querySelectorAll('[data-show-alerts]'), el => {
+			el.addEventListener('click', event => {
+				if (event.currentTarget.checked) {
+					ELEMENT.classList.add('show-alerts');
+				} else {
+					ELEMENT.classList.remove('show-alerts');
+				}
+			});
+		});
+	}
+
 	function sortAndFilter() {
 		_data = _.clone(_oData);
 
@@ -174,6 +186,10 @@
 		renderBody();
 		renderSelectColumns();
 		attachHandlers();
+
+		// Note: these kinds of handlers should come as a plugin, to avoid
+		// Tablesome to grow into an ugly blob of exceptions and one-offs
+		attachPreferenceHandlers();
 	}
 
 	app.init = init;

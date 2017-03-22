@@ -10,6 +10,15 @@
 
 	<main role="main">
 		<h1><span>Tablesome.</span></h1>
+		<div class="preferences">
+			<h2>Preferences:</h2>
+			<ul class="flat-list">
+				<li>
+					<input type="checkbox" data-show-alerts id="show-alerts" checked>
+					<label for="show-alerts">Show alerts</label>
+				</li>
+			</ul>
+		</div>
 		<div class="filters">
 			<h2>Filter on:</h2>
 			<ul class="flat-list">
@@ -29,7 +38,7 @@
 			</ul>
 		</div>
 		<form method="get" action="/bulkedit">
-			<table data-tablesome>
+			<table data-tablesome class="show-alerts">
 				<thead id="header"></thead>
 				<tbody id="body"></tbody>
 			</table>
