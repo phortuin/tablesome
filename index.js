@@ -55,7 +55,7 @@
 		Object.keys(columns).forEach(column => {
 			columns[column].visible = state.visibleColumns.indexOf(column) > -1;
 		});
-		SELECT_COLUMNS_ELEMENT.innerHTML = renderPartial('select-columns', { columns: _oData.columns });
+		SELECT_COLUMNS_ELEMENT.innerHTML = renderPartial('select-columns', { columns });
 	}
 
 	function addFilter(filterName) {
