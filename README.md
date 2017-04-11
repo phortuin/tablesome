@@ -5,6 +5,7 @@ Prototype for dynamic table component. Create a HTML table based on JSON-structu
 - Show & hide columns
 - Programmable filters
 - Sort columns alphanumerically 
+- Filtering on row values per column
 
 Uses [Handlebars](http://handlebarsjs.com/) templates.
 
