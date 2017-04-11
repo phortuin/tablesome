@@ -25,6 +25,20 @@
 	}
 
 	function renderHeader() {
+		const filter_values = Object.keys(_data.columns).reduce((prev, curr) => {
+			prev[curr] = _.uniq(_.map(_data.rows, row => {
+				if (_.isObject(row[curr])) {
+					return row[curr].value;
+				} else {
+					return row[curr];
+				}
+			}));
+			return prev;
+		}, {});
+
+		Object.keys(_data.columns).forEach(column => {
+			_data.columns[column].filter_values = filter_values[column];
+		});
 		HEADER_ELEMENT.innerHTML = renderPartial('table-header', { columns: _data.columns });
 		updateHeaderButtons(state.sortBy);
 		attachHeaderHandlers();
@@ -82,6 +96,22 @@
 				state.sortBy = event.currentTarget.dataset.sort;
 				sortAndFilter();
 				updateHeaderButtons();
+				renderBody();
+			});
+		});
+
+		[].forEach.call(document.querySelectorAll('[data-filter-rows]'), el => {
+			el.addEventListener('change', event => {
+				const filterName = event.currentTarget.name;
+				const filterValue = event.currentTarget.value;
+				// Compare as strings, and check for direct key => value match
+				// OR key => object.value match
+				removeFilter(filterName);
+				if (filterValue !== 'all') {
+					_filters[filterName] = row => `${row[filterName]}` === filterValue || `${row[filterName].value}` === filterValue;
+					addFilter(filterName);
+				}
+				sortAndFilter();
 				renderBody();
 			});
 		});
@@ -164,6 +194,10 @@
 		});
 
 		// Hide invisible columns
+		//
+		// NOTE: this breaks row filtering by using the select box, since
+		// that is built on the original _data.columns & _data.rows (I think)
+		//
 		_data.columns = _.pick(_data.columns, state.visibleColumns);
 		_data.rows = _data.rows.map(item => {
 			return _.pick(item, state.visibleColumns.concat(['id']));
@@ -204,11 +238,13 @@ window.app.init({
 		},
 		species: {
 			title: 'Species',
-			sortable: true
+			sortable: true,
+			filterable: true
 		},
 		age: {
 			title: 'Age',
-			sortable: true
+			sortable: true,
+			filterable: true
 		},
 		color: {
 			title: 'Color',
@@ -254,11 +290,18 @@ window.app.init({
 			color: 'vlekjes'
 		},
 		{
+			id: 'spike',
+			name: 'Spike',
+			species: 'hond',
+			age: 9,
+			color: 'zwart'
+		},
+		{
 			id: 'hera',
 			name: 'Hera',
 			species: 'hond',
 			age: {
-				value: 11,
+				value: 9,
 				warning: true,
 				message: 'Hond wordt te oud'
 			},
